@@ -1,0 +1,10 @@
+broker_url = "redis://:123@127.0.0.1:6379/9"  # 指定 Broker
+result_backend = "redis://:123@127.0.0.1:6379/9"  # 指定 Backend
+task_result_expires = 18000  # celery任务结果有效期
+task_serializer = "json"  # 任务序列化结构
+result_serializer = "json"  # 结果序列化结构
+accept_content = ["json"]  # celery接收内容类型['pickle', 'json', 'msgpack', 'yaml']
+enable_utc = True  # 启动时区设置
+timezone = "Asia/Shanghai"  # 指定时区，默认是 UTC
+log_file = "logs/celery.log"  # celery日志存储位置
+imports = ("tasks.user",)  # 指定导入的任务模块

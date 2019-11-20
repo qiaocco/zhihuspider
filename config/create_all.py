@@ -1,11 +1,11 @@
 import sys
 
-from db.basic import Base, engine  # noqa
-from db.models import *  # noqa
-
 # to work well inside config module or outsize config module
 sys.path.append("..")
 sys.path.append(".")
+
+from db.basic import Base, engine  # noqa isort:skip
+from db.models import *  # noqa isort:skip
 
 
 def create_all_table():

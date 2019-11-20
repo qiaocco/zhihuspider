@@ -1,0 +1,15 @@
+# coding:utf-8
+db:
+    host: 127.0.0.1
+    port: 3306
+    user: zhihu
+    password: 123
+    db_name: zhihu
+    db_type: mysql
+
+redis:
+    host: 127.0.0.1
+    port: 6379
+    password: '123'
+    broker: 6                    # broker for celery
+    backend: 7                   # backed for celery

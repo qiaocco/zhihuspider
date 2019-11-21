@@ -19,3 +19,11 @@ class User(Base):
     follower = Column(Integer)  # 关注数
     following = Column(Integer)  # 粉丝数
     image_url = Column(String(200))  # 头像url
+
+
+class SeedUser(Base):
+    __tablename__ = "seed_users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100))  # 种子用户的用户名
+    is_crawled = Column(Integer, default=0)

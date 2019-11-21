@@ -16,4 +16,5 @@ engine = create_engine(connect_str, echo=True)
 # 创建对象的基类:
 Base = declarative_base()
 # 创建DBSession类型:
-Session = sessionmaker(bind=engine)
+DBSession = sessionmaker(bind=engine)
+session = DBSession()

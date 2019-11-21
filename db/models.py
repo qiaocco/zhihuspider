@@ -1,9 +1,6 @@
-from sqlalchemy import Column, Integer, String, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String
 
-from config.conf import get_db_args
-from db.basic import Base
+from db.basic import Base, session
 
 
 class User(Base):
@@ -20,6 +17,10 @@ class User(Base):
     following = Column(Integer)  # 粉丝数
     image_url = Column(String(200))  # 头像url
 
+    @classmethod
+    def get_user_by_name(cls, name):
+        return session.query(cls).filter(User.name == name).first()
+
 
 class SeedUser(Base):
     __tablename__ = "seed_users"
@@ -27,3 +28,7 @@ class SeedUser(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(100))  # 种子用户的用户名
     is_crawled = Column(Integer, default=0)
+
+    @classmethod
+    def get_seed_names(cls):
+        return session.query(cls.name).filter_by(is_crawled=0)

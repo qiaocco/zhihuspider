@@ -1,2 +1,4 @@
 celery==4.4.0rc4
 PyYAML==5.1.2
+requests
+lxml

@@ -1,9 +1,8 @@
 import sys
 
-from tasks import execute_user_task
-
 sys.path.append(".")
 sys.path.append("..")
+from tasks import execute_user_task  # noqa isort:skip
 
 
 if __name__ == "__main__":

@@ -15,6 +15,9 @@ def crawl_user_info(name):
 
     crawler.info(f"received task crawl_user_info {name}")
     user, is_crawled = get_profile(name)
+    if not is_crawled:
+        crawler.info(f"send task crawl_follower_fans {user.name}")
+        app.send_task("tasks.user.crawl_follower_fans", args=(user.name,))
 
 
 @app.task

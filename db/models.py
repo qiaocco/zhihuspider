@@ -15,6 +15,9 @@ class User(Base):
     introduction = Column(String(200))  # 个人简介
     follower = Column(Integer)  # 关注数
     following = Column(Integer)  # 粉丝数
+    approve = Column(Integer)  # 赞同数
+    thanks = Column(Integer)  # 感谢数
+    collect = Column(Integer)  # 收藏数
     image_url = Column(String(200))  # 头像url
 
     @classmethod
@@ -32,3 +35,15 @@ class SeedUser(Base):
     @classmethod
     def get_seed_names(cls):
         return session.query(cls.name).filter_by(is_crawled=0)
+
+    @classmethod
+    def set_seed_crawled(cls, user_name, result):
+        seed = session.query(cls).filter(cls.name == user_name).first()
+        if seed:
+            seed.is_crawled = result
+        else:
+            seed = cls()
+            seed.name = user_name
+            seed.is_crawled = result
+            session.add(seed)
+        session.commit()

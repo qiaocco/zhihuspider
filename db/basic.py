@@ -4,17 +4,23 @@ from sqlalchemy.orm import sessionmaker
 
 from config.conf import get_db_args
 
-db_args = get_db_args()
+
+def get_engine():
+    db_args = get_db_args()
+
+    # 初始化数据库连接:
+    connect_str = (
+        f"{db_args['db_type']}+pymysql://{db_args['user']}:{db_args['password']}"
+        f"@{db_args['host']}:{db_args['port']}/{db_args['db_name']}"
+    )
+
+    engine = create_engine(connect_str, echo=True)
+    return engine
 
 
-# 初始化数据库连接:
-connect_str = (
-    f"{db_args['db_type']}+pymysql://{db_args['user']}:{db_args['password']}"
-    f"@{db_args['host']}:{db_args['port']}/{db_args['db_name']}"
-)
-engine = create_engine(connect_str, echo=True)
+eng = get_engine()
 # 创建对象的基类:
 Base = declarative_base()
 # 创建DBSession类型:
-DBSession = sessionmaker(bind=engine)
+DBSession = sessionmaker(bind=eng)
 session = DBSession()

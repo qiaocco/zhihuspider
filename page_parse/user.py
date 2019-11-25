@@ -22,10 +22,7 @@ def get_detail(user_name, html):
     career_xpath = "//div[@class='ProfileHeader-infoItem'][1]/text()"
     education_xpath = "//div[@class='ProfileHeader-infoItem'][2]/text()"
     follow_xpath = "//strong[@class='NumberBoard-itemValue']"
-    # approve_xpath = "//div[@class='IconGraf']/text()"
-    # thanks_and_collect_xpath = "//div[@class='Profile-sideColumnItemValue']/text()"
     img_xpath = "//img[@class='Avatar Avatar--large UserAvatar-inner']/@src"
-
     try:
         headline_item = root.xpath(headline_xpath)
         if headline_item:
@@ -47,7 +44,6 @@ def get_detail(user_name, html):
             user.approve = num_str_to_int(approve_item.group(1))
 
         thanks_and_collect = re.search(r"获得 (\d+(?:,*\d+)) 次感谢，(\d+(?:,*\d+)) 次收", html)
-        # thanks_and_collect = root.xpath(thanks_and_collect_xpath)[0]
         if thanks_and_collect:
             thanks_str, collect_str = thanks_and_collect.groups()
             user.thanks = num_str_to_int(thanks_str)

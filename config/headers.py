@@ -31,5 +31,5 @@ class FakeChromeUA:
 
 headers = {
     "User-Agent": FakeChromeUA.get_ua(),
-    "Cookies": 'tgw_l7_route=a37704a413efa26cf3f23813004f1a3b; _zap=429a399a-cef3-4765-bb25-7f150a18443c; _xsrf=wQiphBkFBvO1khtMEQzVZF4enEy3AVEQ; d_c0="AHDvcExeYxCPTousXDVQrutnothwaNgSGxQ=|1574326404"; Hm_lvt_98beee57fd2ef70ccdd5ca52b9740c49=1574326404; capsion_ticket="2|1:0|10:1574326437|14:capsion_ticket|44:YjQyNzhjNDg1OTNhNDBmODhhMzk1Mzc2MDI5Y2ZlODQ=|99b2a99a46876ee80f39f381be092b0f93619e15d55bf7aed1116af6caf69d96"; Hm_lpvt_98beee57fd2ef70ccdd5ca52b9740c49=1574326443',
+    "Cookies": 'tgw_l7_route=5966d81f231983c5ed4f6d32ecde8ac5; _zap=46573718-fe42-4030-abac-90ef946efb09; _xsrf=8594c9c6-7b2e-4df2-86b6-94f48883b2a5; d_c0="AOBujCeJaBCPTv7Z59FfVCxq4e2G04lHKig=|1574673183"; Hm_lvt_98beee57fd2ef70ccdd5ca52b9740c49=1574673189; Hm_lpvt_98beee57fd2ef70ccdd5ca52b9740c49=1574673189',
 }

@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, text
 
 from db.basic import Base, session
+from decorators import db_commit_decorator
 
 
 class User(Base):
@@ -30,20 +31,47 @@ class SeedUser(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100))  # 种子用户的用户名
-    is_crawled = Column(Integer, default=0)
+    home_crawled = Column(
+        Integer, server_default=text("0")
+    )  # 首页抓取状态 0:未抓取, 1:抓取成功, 2: 抓取失败
+    other_crawled = Column(Integer, server_default=text("0"))  # 粉丝关注抓取状态
 
     @classmethod
     def get_seed_names(cls):
-        return session.query(cls.name).filter_by(is_crawled=0)
+        q = session.query(cls.name).filter_by(home_crawled=0)
+        return q, session.query(q.exists()).scalar()
 
     @classmethod
-    def set_seed_crawled(cls, user_name, result):
+    @db_commit_decorator
+    def set_home_crawled(cls, user_name, result):
         seed = session.query(cls).filter(cls.name == user_name).first()
         if seed:
-            seed.is_crawled = result
+            seed.home_crawled = result
         else:
             seed = cls()
             seed.name = user_name
-            seed.is_crawled = result
+            seed.home_crawled = result
             session.add(seed)
+        session.commit()
+
+    @classmethod
+    def get_seed_by_name(cls, user_name):
+        return session.query(cls).filter(cls.name == user_name).first()
+
+    @classmethod
+    @db_commit_decorator
+    def insert_many(cls, user_names):
+        for name in user_names:
+            if not cls.get_seed_by_name(name):
+                seed = cls()
+                seed.name = name
+                session.add(seed)
+                session.flush()
+        session.commit()
+
+    @classmethod
+    @db_commit_decorator
+    def set_other_crawled(cls, user_name, result):
+        seed = cls.get_seed_by_name(user_name)
+        seed.other_crawled = result
         session.commit()

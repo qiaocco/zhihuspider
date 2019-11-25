@@ -1,3 +1,4 @@
+import random
 from pathlib import Path
 
 import yaml
@@ -16,3 +17,16 @@ def get_db_args():
 
 def get_redis_args():
     return cf.get("redis")
+
+
+def get_crawl_interval():
+    interval = random.randint(cf.get("min_crawl_interal"), cf.get("max_crawl_interal"))
+    return interval
+
+
+def get_crawl_timeout():
+    return cf.get("timeout")
+
+
+def get_max_follow_page():
+    return cf.get("max_follow_page")

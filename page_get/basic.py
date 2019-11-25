@@ -1,14 +1,20 @@
+import time
+
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
+from config.conf import get_crawl_interval, get_crawl_timeout
 from config.headers import headers
 from logger import crawler
 from utils.get_proxy import get_proxy
 
+REQUEST_INTERVAL = get_crawl_interval()
+REQUEST_TIMEOUT = get_crawl_timeout()
+
 
 def requests_retry_session(
-    retries=3, backoff_factor=0.3, status_forcelist=(500, 502, 504, 404), session=None,
+    retries=3, backoff_factor=0.3, status_forcelist=(500, 502, 504), session=None,
 ):
     session = session or requests.Session()
     retry = Retry(
@@ -27,18 +33,10 @@ def requests_retry_session(
 def get_page(url):
     crawler.info("the crawling url is {url}".format(url=url))
     # proxies = get_proxy()
-    resp = requests_retry_session().get(url, headers=headers)
+    time.sleep(REQUEST_INTERVAL)
+    crawler.info(f"sleep {REQUEST_INTERVAL}")
 
-    return resp.text
-
-
-def get_requests(url):
-    headers = {
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
-        "cookies": 'tgw_l7_route=a37704a413efa26cf3f23813004f1a3b; _zap=429a399a-cef3-4765-bb25-7f150a18443c; _xsrf=wQiphBkFBvO1khtMEQzVZF4enEy3AVEQ; d_c0="AHDvcExeYxCPTousXDVQrutnothwaNgSGxQ=|1574326404"; Hm_lvt_98beee57fd2ef70ccdd5ca52b9740c49=1574326404; capsion_ticket="2|1:0|10:1574326437|14:capsion_ticket|44:YjQyNzhjNDg1OTNhNDBmODhhMzk1Mzc2MDI5Y2ZlODQ=|99b2a99a46876ee80f39f381be092b0f93619e15d55bf7aed1116af6caf69d96"; Hm_lpvt_98beee57fd2ef70ccdd5ca52b9740c49=1574326443',
-    }
-
-    resp = requests.get(url, headers=headers)
+    resp = requests_retry_session().get(url, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return resp.text
 

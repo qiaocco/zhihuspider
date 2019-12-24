@@ -1,7 +1,3 @@
-import json
-
-from lxml import etree
-
 from config.conf import get_max_follow_page
 from db.common import CommonOperate
 from db.models import SeedUser, User
@@ -96,3 +92,5 @@ def get_fans_or_followers_names(name, crawl_type):
         storage.info(
             f"get {name} page={page}, max_follow_page={max_follow_page}, is_end={is_end}"
         )
+
+    storage.info(f"crawle {name} fans and followers done")

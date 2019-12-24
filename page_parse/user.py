@@ -39,17 +39,25 @@ def get_detail(user_name, html):
         if follow_item:
             user.follower = num_str_to_int(follow_item[0].text)
             user.following = num_str_to_int(follow_item[1].text)
-        approve_item = re.search(r"获得 (\d+(?:,\d+)) 次赞同", html)
+
+        re_comma_seprated_number = "([0-9][0-9,.]+)"
+        approve_item = re.search(f"获得 {re_comma_seprated_number} 次赞同", html)
         if approve_item:
             user.approve = num_str_to_int(approve_item.group(1))
 
-        thanks_and_collect = re.search(r"获得 (\d+(?:,*\d+)) 次感谢，(\d+(?:,*\d+)) 次收", html)
-        if thanks_and_collect:
-            thanks_str, collect_str = thanks_and_collect.groups()
+        thanks = re.search(f"获得 {re_comma_seprated_number} 次感谢", html)
+        if thanks:
+            thanks_str = thanks.group(1)
             user.thanks = num_str_to_int(thanks_str)
+        else:
+            user.thanks = 0
+
+        collect = re.search(f"{re_comma_seprated_number} 次收藏", html)
+        if collect:
+            collect_str = collect.group(1)
             user.collect = num_str_to_int(collect_str)
         else:
-            user.thanks, user.collect = -1, -1
+            user.collect = 0
 
         img_item = root.xpath(img_xpath)
         if img_item:

@@ -75,3 +75,17 @@ class SeedUser(Base):
         seed = cls.get_seed_by_name(user_name)
         seed.other_crawled = result
         session.commit()
+
+
+class HotList(Base):
+    __tablename__ = "hot_lists"
+
+    id = Column(Integer, primary_key=True)
+    hot_num = Column(Integer)  # 热度，单位：万
+    title = Column(String(200))  # 标题
+    excerpt = Column(String(500))  # 引用
+    answer_count = Column(Integer)  # 回答数
+    comment_count = Column(Integer)  # 评论数
+    follower_count = Column(Integer)  # 关注数
+    url = Column(String(200))  # 链接
+    category = Column(String(100))  # 类型

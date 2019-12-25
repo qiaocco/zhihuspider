@@ -4,12 +4,12 @@ import sys
 sys.path.append("..")
 sys.path.append(".")
 
-from db.basic import Base, engine  # noqa isort:skip
+from db.basic import Base, eng  # noqa isort:skip
 from db.models import *  # noqa isort:skip
 
 
 def create_all_table():
-    Base.metadata.create_all(engine)
+    Base.metadata.create_all(eng)
 
 
 if __name__ == "__main__":

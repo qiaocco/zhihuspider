@@ -7,4 +7,4 @@ accept_content = ["json"]  # celery接收内容类型['pickle', 'json', 'msgpack
 enable_utc = True  # 启动时区设置
 timezone = "Asia/Shanghai"  # 指定时区，默认是 UTC
 log_file = "logs/celery.log"  # celery日志存储位置
-imports = ("tasks.user",)  # 指定导入的任务模块
+imports = ("tasks.user", "tasks.hot_list")  # 指定导入的任务模块

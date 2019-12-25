@@ -9,9 +9,6 @@ from config.headers import headers
 from logger import crawler
 from utils.get_proxy import get_proxy
 
-REQUEST_INTERVAL = get_crawl_interval()
-REQUEST_TIMEOUT = get_crawl_timeout()
-
 
 def requests_retry_session(
     retries=3, backoff_factor=0.3, status_forcelist=(500, 502, 504), session=None,
@@ -33,10 +30,13 @@ def requests_retry_session(
 def get_page(url):
     crawler.info("the crawling url is {url}".format(url=url))
     # proxies = get_proxy()
+    REQUEST_INTERVAL = get_crawl_interval()
+    REQUEST_TIMEOUT = get_crawl_timeout()
+
     time.sleep(REQUEST_INTERVAL)
     crawler.info(f"sleep {REQUEST_INTERVAL}")
 
-    resp = requests_retry_session().get(url, headers=headers, timeout=REQUEST_TIMEOUT)
+    resp = requests_retry_session().get(url, headers=headers, timeout=REQUEST_TIMEOUT,)
 
     return resp.text
 

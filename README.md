@@ -20,3 +20,4 @@
 5. 配置完成后，通过`celery -A tasks.workers worker -l info`启动worker。
 
 6. 发送任务给worker。通过`python task_execution/user_execute.py`发送抓取用户首页任务。
+。通过`python task_execution/hot_list_execute.py`发送抓取热榜任务。
